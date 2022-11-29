@@ -24,6 +24,14 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        //            // 测试
+            UserDTO userDTO1 = new UserDTO();
+            userDTO1.setId(1010L);
+            userDTO1.setNickName("user_14jjs6pv54");
+            // 6. 存在，保存用户信息到ThreadLocal
+            UserHolder.saveUser(userDTO1);
+
         // TODO 1.获取请求头中的token
         String token = request.getHeader("authorization");
         if (StrUtil.isBlank(token)) {

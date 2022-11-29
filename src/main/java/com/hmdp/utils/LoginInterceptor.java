@@ -6,6 +6,7 @@ import com.hmdp.dto.UserDTO;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,9 @@ import static com.hmdp.utils.RedisConstants.*;
 
 public class  LoginInterceptor  implements HandlerInterceptor {
 
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 1. 判断是否需要拦截(ThreadLocal中是否有用户)
@@ -24,6 +28,14 @@ public class  LoginInterceptor  implements HandlerInterceptor {
             // 没有，需要拦截，设置状态码
             response.setStatus(401);
             return false;
+
+
+//            // 测试
+//            UserDTO userDTO = new UserDTO();
+//            userDTO.setId(1010L);
+//            userDTO.setNickName("user_14jjs6pv54");
+//            // 6. 存在，保存用户信息到ThreadLocal
+//            UserHolder.saveUser(userDTO);
         }
 
         // 有用户， 放行
